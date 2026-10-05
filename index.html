@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jyoti's iPhone</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #111;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* PHONE */
+
+.phone {
+    width: 360px;
+    height: 720px;
+    background: #000;
+    border: 8px solid #222;
+    border-radius: 45px;
+    padding: 3px;
+    box-shadow: 0 0 40px rgba(255,255,255,0.15);
+    overflow: hidden;
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 35px;
+    overflow: hidden;
+    position: relative;
+    background: #111;
+}
+
+/* DYNAMIC ISLAND */
+
+.dynamic-island {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 115px;
+    height: 32px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+}
+
+/* LOCK SCREEN */
+
+.lock-screen {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.15),
+            rgba(0,0,0,0.35)
+        ),
+        url("jyoti.png");
+
+    background-size: cover;
+    background-position: center;
+
+    color: white;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.phone-name {
+    margin-top: 55px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.clock {
+    margin-top: 50px;
+    font-size: 65px;
+    font-weight: 300;
+}
+
+.date {
+    font-size: 17px;
+    margin-top: 3px;
+}
+
+.unlock {
+    position: absolute;
+    bottom: 50px;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+/* HOME SCREEN */
+
+.home {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.1),
+            rgba(0,0,0,0.2)
+        ),
+        url("jyoti.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    display: none;
+    padding: 65px 18px 80px;
+}
+
+/* APP GRID */
+
+.apps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px 12px;
+}
+
+.app {
+    text-align: center;
+    color: white;
+    font-size: 11px;
+    cursor: pointer;
+    text-shadow: 0 1px 4px #000;
+}
+
+.icon {
+    width: 58px;
+    height: 58px;
+    margin: auto;
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.app span {
+    display: block;
+    margin-top: 5px;
+}
+
+/* DOCK */
+
+.dock {
+    position: absolute;
+    bottom: 18px;
+    left: 12px;
+    right: 12px;
+
+    height: 78px;
+    border-radius: 25px;
+
+    background: rgba(255,255,255,0.22);
+    backdrop-filter: blur(15px);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.dock-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 14px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 27px;
+    background: rgba(255,255,255,0.9);
+    cursor: pointer;
+}
+
+/* APP WINDOWS */
+
+.app-window {
+    position: absolute;
+    inset: 0;
+
+    background: white;
+    z-index: 50;
+
+    display: none;
+    color: black;
+}
+
+/* HEADER */
+
+.header {
+    height: 65px;
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+}
+
+.back {
+    color: #007aff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* PHOTOS */
+
+.photos-content {
+    padding: 15px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.photos-content img {
+    width: 100%;
+    aspect-ratio: 1;
+
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* MESSAGES */
+
+.messages-window {
+    background: #f5f5f7;
+}
+
+.messages-header {
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 15px;
+
+    background: rgba(255,255,255,0.96);
+    border-bottom: 1px solid #ddd;
+}
+
+.messages-header .back {
+    font-size: 35px;
+    color: #007aff;
+    cursor: pointer;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-photo {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background:
+        url("jyoti.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-weight: bold;
+}
+
+.contact b {
+    display: block;
+    font-size: 16px;
+}
+
+.contact small {
+    color: #777;
+    font-size: 11px;
+}
+
+.info {
+    font-size: 22px;
+    color: #007aff;
+}
+
+.chat {
+    height: calc(100% - 125px);
+
+    overflow-y: auto;
+
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.date-divider {
+    text-align: center;
+    color: #888;
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+.message {
+    max-width: 75%;
+
+    padding: 9px 13px;
+
+    border-radius: 18px;
+
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.received {
+    align-self: flex-start;
+
+    background: #e5e5ea;
+
+    border-bottom-left-radius: 5px;
+}
+
+.sent {
+    align-self: flex-end;
+
+    background: #007aff;
+    color: white;
+
+    border-bottom-right-radius: 5px;
+}
+
+.message-input {
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    height: 55px;
+
+    background: white;
+    border-top: 1px solid #ddd;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+    padding: 7px 10px;
+}
+
+.plus {
+    font-size: 25px;
+    color: #007aff;
+}
+
+.input-box {
+    flex: 1;
+
+    height: 34px;
+
+    border: 1px solid #ccc;
+    border-radius: 18px;
+
+    display: flex;
+    align-items: center;
+
+    padding-left: 14px;
+
+    color: #999;
+    font-size: 13px;
+}
+
+/* CALCULATOR */
+
+.calculator {
+    background: #000;
+    color: white;
+}
+
+.calc-display {
+    height: 150px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    padding: 20px;
+
+    font-size: 42px;
+}
+
+.calc-buttons {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 8px;
+
+    padding: 12px;
+}
+
+.calc-buttons button {
+    height: 60px;
+
+    border: none;
+    border-radius: 50%;
+
+    font-size: 22px;
+
+    background: #333;
+    color: white;
+
+    cursor: pointer;
+}
+
+.calc-buttons button:hover {
+    opacity: 0.8;
+}
+
+.calc-buttons .operator {
+    background: #ff9500;
+}
+
+.calc-buttons .clear {
+    background: #a5a5a5;
+    color: black;
+}
+
+/* SETTINGS */
+
+.settings-content {
+    padding: 20px;
+}
+
+.setting {
+    padding: 17px;
+
+    border-bottom: 1px solid #ddd;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+/* NOTES */
+
+.notes-content {
+    padding: 20px;
+}
+
+.note {
+    background: #fff7a8;
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* MUSIC */
+
+.music-content {
+    text-align: center;
+    padding: 35px 20px;
+}
+
+.album {
+    width: 190px;
+    height: 190px;
+
+    margin: 20px auto;
+
+    border-radius: 20px;
+
+    background:
+        url("jyoti.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.music-button {
+    font-size: 40px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+/* WEATHER */
+
+.weather-content {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.temperature {
+    font-size: 65px;
+    margin: 20px;
+}
+
+/* CAMERA */
+
+.camera-content {
+    background: #111;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 18px;
+}
+
+/* HOME BAR */
+
+.home-bar {
+    position: absolute;
+
+    bottom: 8px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 110px;
+    height: 5px;
+
+    background: white;
+
+    border-radius: 10px;
+
+    z-index: 200;
+
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="screen">
+
+<!-- DYNAMIC ISLAND -->
+
+<div class="dynamic-island"></div>
+
+
+<!-- LOCK SCREEN -->
+
+<div class="lock-screen" id="lockScreen">
+
+    <div class="phone-name">
+        Jyoti's iPhone
+    </div>
+
+    <div class="clock" id="clock">
+        12:00
+    </div>
+
+    <div class="date" id="date">
+        Monday
+    </div>
+
+    <div class="unlock">
+        Tap anywhere to unlock
+    </div>
+
+</div>
+
+
+<!-- HOME SCREEN -->
+
+<div class="home" id="homeScreen">
+
+    <div class="apps">
+
+        <!-- Calculator -->
+
+        <div class="app" onclick="openApp('calculator')">
+            <div class="icon">🧮</div>
+            <span>Calculator</span>
+        </div>
+
+
+        <!-- Messages -->
+
+        <div class="app" onclick="openApp('messages')">
+            <div class="icon">💬</div>
+            <span>Messages</span>
+        </div>
+
+
+        <!-- Settings -->
+
+        <div class="app" onclick="openApp('settings')">
+            <div class="icon">⚙️</div>
+            <span>Settings</span>
+        </div>
+
+
+        <!-- Camera -->
+
+        <div class="app" onclick="openApp('camera')">
+            <div class="icon">📷</div>
+            <span>Camera</span>
+        </div>
+
+
+        <!-- Photos -->
+
+        <div class="app" onclick="openApp('photos')">
+            <div class="icon">🌸</div>
+            <span>Photos</span>
+        </div>
+
+
+        <!-- Music -->
+
+        <div class="app" onclick="openApp('music')">
+            <div class="icon">🎵</div>
+            <span>Music</span>
+        </div>
+
+
+        <!-- Weather -->
+
+        <div class="app" onclick="openApp('weather')">
+            <div class="icon">☀️</div>
+            <span>Weather</span>
+        </div>
+
+
+        <!-- Notes -->
+
+        <div class="app" onclick="openApp('notes')">
+            <div class="icon">📝</div>
+            <span>Notes</span>
+        </div>
+
+    </div>
+
+
+    <!-- DOCK -->
+
+    <div class="dock">
+
+        <div class="dock-icon">
+            📞
+        </div>
+
+        <div class="dock-icon" onclick="openApp('messages')">
+            💬
+        </div>
+
+        <div class="dock-icon" onclick="openApp('music')">
+            🎵
+        </div>
+
+        <div class="dock-icon">
+            🌐
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PHOTOS APP -->
+
+<div class="app-window" id="photos">
+
+    <div class="header">
+
+        <span class="back" onclick="goHome()">
+            ‹ Home
+        </span>
+
+        <b>Photos</b>
+
+        <span>•••</span>
+
+    </div>
+
+    <div class="photos-content">
+
+        <img src="jyoti.png" alt="Jyoti">
+
+        
+
+    </div>
+
+</div>
+
+
+<!-- MESSAGES APP -->
+
+<div class="app-window messages-window" id="messages">
+
+    <div class="messages-header">
+
+        <span class="back" onclick="goHome()">
+            ‹
+        </span>
+
+        <div class="contact">
+
+            <div class="contact-photo"></div>
+
+            <div>
+                <b>Jyoti</b>
+                <small>iMessage</small>
+            </div>
+
+        </div>
+
+        <span class="info">
+            ⓘ
+        </span>
+
+    </div>
+
+
+    <div class="chat">
+
+        <div class="date-divider">
+            Today
+        </div>
+
+
+        <div class="message received">
+            Kya kar rahe ho? 👀
+        </div>
+
+
+        <div class="message sent">
+            Bas tumhara virtual iPhone bana raha hu 😂
+        </div>
+
+
+        <div class="message received">
+            WHAT 😭😂
+        </div>
+
+
+        <div class="message sent">
+            Ab tum officially phone me bhi aa gayi ho 😌
+        </div>
+
+
+        <div class="message received">
+            Pagal ho tum 😂
+        </div>
+
+
+        <div class="message sent">
+            Thoda sa... maybe 😌
+        </div>
+
+
+        <div class="message received">
+            Achha ji 😂
+        </div>
+
+
+    </div>
+
+
+    <div class="message-input">
+
+        <span class="plus">
+            ＋
+        </span>
+
+        <div class="input-box">
+            iMessage
+        </div>
+
+        <span>
+            🎤
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- CALCULATOR -->
+
+<div class="app-window calculator" id="calculator">
+
+    <div class="header" style="background:#000;color:white;">
+
+        <span class="back" onclick="goHome()">
+            ‹ Home
+        </span>
+
+        <b>Calculator</b>
+
+        <span></span>
+
+    </div>
+
+
+    <div class="calc-display" id="calcDisplay">
+        0
+    </div>
+
+
+    <div class="calc-buttons">
+
+        <button class="clear" onclick="clearCalculator()">AC</button>
+
+        <button onclick="deleteNumber()">⌫</button>
+
+        <button onclick="add('%')">%</button>
+
+        <button class="operator" onclick="add('/')">÷</button>
+
+
+        <button onclick="add('7')">7</button>
+        <button onclick="add('8')">8</button>
+        <button onclick="add('9')">9</button>
+        <button class="operator" onclick="add('*')">×</button>
+
+
+        <button onclick="add('4')">4</button>
+        <button onclick="add('5')">5</button>
+        <button onclick="add('6')">6</button>
+        <button class="operator" onclick="add('-')">−</button>
+
+
+        <button onclick="add('1')">1</button>
+        <button onclick="add('2')">2</button>
+        <button onclick="add('3')">3</button>
+        <button class="operator" onclick="add('+')">+</button>
+
+
+        <button onclick="add('0')">0</button>
+        <button onclick="add('.')">.</button>
+
+        <button
+            class="operator"
+            style="grid-column: span 2;"
+            onclick="calculate()">
+            =
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- SETTINGS -->
+
+<div class="app-window" id="settings">
+
+    <div class="header">
+
+        <span class="back" onclick="goHome()">
+            ‹ Home
+        </span>
+
+        <b>Settings</b>
+
+        <span></span>
+
+    </div>
+
+
+    <div class="settings-content">
+
+        <div class="setting">
+            <span>📱 General</span>
+            <span>›</span>
+        </div>
+
+        <div class="setting">
+            <span>🔔 Notifications</span>
+            <span>›</span>
+        </div>
+
+        <div class="setting">
+            <span>🌐 Wi-Fi</span>
+            <span>Connected</span>
+        </div>
+
+        <div class="setting">
+            <span>🔋 Battery</span>
+            <span>87%</span>
+        </div>
+
+        <div class="setting">
+            <span>❤️ About</span>
+            <span>Jyoti's iPhone</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CAMERA -->
+
+<div class="app-window" id="camera">
+
+    <div class="camera-content">
+
+        📷 Camera
+
+        <br><br>
+
+        Camera preview
+
+    </div>
+
+</div>
+
+
+<!-- MUSIC -->
+
+<div class="app-window" id="music">
+
+    <div class="header">
+
+        <span class="back" onclick="goHome()">
+            ‹ Home
+        </span>
+
+        <b>Music</b>
+
+        <span>•••</span>
+
+    </div>
+
+
+    <div class="music-content">
+
+        <div class="album"></div>
+
+        <h2>Favourite Song</h2>
+
+        <p style="margin-top:8px;color:#777;">
+            Jyoti's Playlist
+        </p>
+
+        <div class="music-button">
+            ▶️
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- WEATHER -->
+
+<div class="app-window" id="weather">
+
+    <div class="header">
+
+        <span class="back" onclick="goHome()">
+            ‹ Home
+        </span>
+
+        <b>Weather</b>
+
+        <span></span>
+
+    </div>
+
+
+    <div class="weather-content">
+
+        <h2>Today</h2>
+
+        <div class="temperature">
+            ☀️ 24°
+        </div>
+
+        <p>
+            Perfect day ✨
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- NOTES -->
+
+<div class="app-window" id="notes">
+
+    <div class="header">
+
+        <span class="back" onclick="goHome()">
+            ‹ Home
+        </span>
+
+        <b>Notes</b>
+
+        <span>＋</span>
+
+    </div>
+
+
+    <div class="notes-content">
+
+        <div class="note">
+
+            <h3>For Jyoti 🌸</h3>
+
+            <br>
+
+            <p>
+                Just a little virtual iPhone
+                made with some random ideas,
+                memories and a lot of coding 😂
+            </p>
+
+            <br>
+
+            <p>
+                Hope this makes you smile :)
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- HOME BAR -->
+
+<div class="home-bar" onclick="goHome()"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* LOCK SCREEN */
+
+const lockScreen =
+    document.getElementById("lockScreen");
+
+const homeScreen =
+    document.getElementById("homeScreen");
+
+
+lockScreen.onclick = function() {
+
+    lockScreen.style.display = "none";
+
+    homeScreen.style.display = "block";
+
+};
+
+
+/* CLOCK */
+
+function updateClock() {
+
+    const now = new Date();
+
+    let hours = now.getHours();
+
+    let minutes = now.getMinutes();
+
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    let ampm = hours >= 12 ? "PM" : "AM";
+
+    hours = hours % 12;
+
+    hours = hours ? hours : 12;
+
+    document.getElementById("clock").innerText =
+        hours + ":" + minutes + " " + ampm;
+
+
+    const options = {
+        weekday: "long",
+        month: "long",
+        day: "numeric"
+    };
+
+    document.getElementById("date").innerText =
+        now.toLocaleDateString("en-US", options);
+
+}
+
+
+updateClock();
+
+setInterval(updateClock, 1000);
+
+
+/* OPEN APP */
+
+function openApp(id) {
+
+    document.querySelectorAll(".app-window")
+        .forEach(app => {
+            app.style.display = "none";
+        });
+
+    document.getElementById(id).style.display =
+        "block";
+
+}
+
+
+/* GO HOME */
+
+function goHome() {
+
+    document.querySelectorAll(".app-window")
+        .forEach(app => {
+            app.style.display = "none";
+        });
+
+}
+
+
+/* CALCULATOR */
+
+let calculation = "";
+
+function add(value) {
+
+    calculation += value;
+
+    document.getElementById("calcDisplay")
+        .innerText = calculation || "0";
+
+}
+
+
+function clearCalculator() {
+
+    calculation = "";
+
+    document.getElementById("calcDisplay")
+        .innerText = "0";
+
+}
+
+
+function deleteNumber() {
+
+    calculation =
+        calculation.slice(0, -1);
+
+    document.getElementById("calcDisplay")
+        .innerText = calculation || "0";
+
+}
+
+
+function calculate() {
+
+    try {
+
+        calculation =
+            eval(calculation).toString();
+
+        document.getElementById("calcDisplay")
+            .innerText = calculation;
+
+    }
+
+    catch {
+
+        calculation = "";
+
+        document.getElementById("calcDisplay")
+            .innerText = "Error";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
